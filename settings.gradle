@@ -21,3 +21,16 @@ dependencyResolutionManagement {
 
 rootProject.name = "EventX2.0"
 include ':app'
+//buildscript {
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+//}
+//
+//allprojects {
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+//}

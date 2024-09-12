@@ -1,5 +1,6 @@
 package com.example.eventx20;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -135,7 +136,10 @@ public class Requirement_collection extends AppCompatActivity {
 
         // Here you can handle the collected data, like sending it to a server, storing in a database, etc.
         // For now, we just clear the form after submission
-        clearForm();
+//        clearForm();
+        Intent intent =new Intent(Requirement_collection.this, Qrcodegenerator.class);
+        intent.putExtra("qrcode",editTextTeamLeaderId.getText().toString().trim());
+        startActivity(intent);
     }
 
     private void clearForm() {
