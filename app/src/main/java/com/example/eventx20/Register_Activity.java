@@ -18,8 +18,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.eventx20.Database.Callback.InsertModel;
-import com.example.eventx20.Database.DataManager;
 import com.example.eventx20.Database.DataModel.User;
+import com.example.eventx20.Database.UserDataManager;
 
 public class Register_Activity extends AppCompatActivity {
 
@@ -57,7 +57,7 @@ public class Register_Activity extends AppCompatActivity {
 
                     User UserRegister = new User(username,email,password);
 
-                    DataManager.InsertData(UserRegister, new InsertModel() {
+                    UserDataManager.InsertData(UserRegister, new InsertModel() {
                         @Override
                         public void onComplete() {
                             editor.apply();

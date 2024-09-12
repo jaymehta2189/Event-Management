@@ -1,6 +1,8 @@
 package com.example.eventx20;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,6 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.eventx20.Database.Callback.GroupToEvent;
+import com.example.eventx20.Database.DataModel.Group;
+import com.example.eventx20.Database.GroupDataManager;
+
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Requirement_collection extends AppCompatActivity {
 
@@ -116,6 +126,8 @@ public class Requirement_collection extends AppCompatActivity {
         }
 
         // Validate dynamic fields
+        List<String> studentemail = new ArrayList<>();
+        studentemail.add(teamLeaderID);
         for (int i = 0; i < dynamicFieldsContainer.getChildCount(); i += 2) {
             EditText studentName = (EditText) dynamicFieldsContainer.getChildAt(i);
             EditText studentID = (EditText) dynamicFieldsContainer.getChildAt(i + 1);
@@ -129,7 +141,26 @@ public class Requirement_collection extends AppCompatActivity {
                 studentID.setError("Student ID " + (i / 2 + 1) + " is required");
                 return;
             }
+            studentemail.add(studentID.getText().toString().trim());
         }
+
+        Group group = new Group(projectTitle,teamName, getIntent().getStringExtra("EVENT_NAME"),contactNumber,studentemail);
+
+        // SEE This Later :)
+        GroupDataManager.InsertUserInGroup(group, new GroupToEvent() {
+            @Override
+            public void onSuccess(Group group, String key) {
+                Intent intent =new Intent(Requirement_collection.this, Dashboard.class);
+                SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+                intent.putExtra("qrcode", sharedPreferences.getString("Key","") + " " + key);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailed() {
+                Toast.makeText(getBaseContext(), "failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // If all validations pass, show a success message
         Toast.makeText(this, "Form Submitted Successfully!", Toast.LENGTH_SHORT).show();
@@ -137,9 +168,7 @@ public class Requirement_collection extends AppCompatActivity {
         // Here you can handle the collected data, like sending it to a server, storing in a database, etc.
         // For now, we just clear the form after submission
 //        clearForm();
-        Intent intent =new Intent(Requirement_collection.this, Qrcodegenerator.class);
-        intent.putExtra("qrcode",editTextTeamLeaderId.getText().toString().trim());
-        startActivity(intent);
+
     }
 
     private void clearForm() {
