@@ -54,8 +54,8 @@ public class Dashboard extends AppCompatActivity {
             public void onClick(View v) {
 //                showToast("Profile Clicked");
                 Intent intent=new Intent(Dashboard.this, Qrcodegenerator.class);
-                String qrcode= getIntent().getStringExtra("qrcode");
-                intent.putExtra("qrcode",qrcode);
+//                String qrcode= getIntent().getStringExtra("qrcode");
+//                intent.putExtra("qrcode",qrcode);
                 startActivity(intent);
             }
         });

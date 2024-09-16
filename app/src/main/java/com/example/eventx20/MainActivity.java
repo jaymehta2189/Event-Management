@@ -68,9 +68,11 @@ public class MainActivity extends AppCompatActivity {
 
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("Key",(String)model);
+//                            editor.putString("qrCode", (String)model);
                             editor.commit();
 
                             Intent intent = new Intent(MainActivity.this, currentevents.class);
+//                            intent.putExtra("qrcode", (String)model);
                             startActivity(intent);
                             finish();
                         }

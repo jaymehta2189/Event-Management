@@ -3,8 +3,10 @@ package com.example.eventx20;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -112,7 +114,7 @@ public class Requirement_collection extends AppCompatActivity {
             return;
         }
         if (TextUtils.isEmpty(teamLeaderID)) {
-            editTextTeamLeaderName.setError("Team Leader's ID is required");
+            editTextTeamLeaderId.setError("Team Leader's ID is required");
             return;
         }
         if (TextUtils.isEmpty(contactNumber)) {
@@ -128,7 +130,23 @@ public class Requirement_collection extends AppCompatActivity {
         // Validate dynamic fields
         List<String> studentemail = new ArrayList<>();
         studentemail.add(teamLeaderID);
-        for (int i = 0; i < dynamicFieldsContainer.getChildCount(); i += 2) {
+//        for (int i = 0; i < dynamicFieldsContainer.getChildCount(); i += 2) {
+//            EditText studentName = (EditText) dynamicFieldsContainer.getChildAt(i);
+//            EditText studentID = (EditText) dynamicFieldsContainer.getChildAt(i + 1);
+//
+//            if (TextUtils.isEmpty(studentName.getText().toString().trim())) {
+//                studentName.setError("Student Name " + (i / 2 + 1) + " is required");
+//                return;
+//            }
+//
+//            if (TextUtils.isEmpty(studentID.getText().toString().trim())) {
+//                studentID.setError("Student ID " + (i / 2 + 1) + " is required");
+//                return;
+//            }
+//            studentemail.add(studentID.getText().toString().trim());
+//        }
+        int childCount = dynamicFieldsContainer.getChildCount();
+        for (int i = 0; i < childCount; i += 2) {
             EditText studentName = (EditText) dynamicFieldsContainer.getChildAt(i);
             EditText studentID = (EditText) dynamicFieldsContainer.getChildAt(i + 1);
 
@@ -147,12 +165,37 @@ public class Requirement_collection extends AppCompatActivity {
         Group group = new Group(projectTitle,teamName, getIntent().getStringExtra("EVENT_NAME"),contactNumber,studentemail);
 
         // SEE This Later :)
+
+//
+//        GroupDataManager.InsertUserInGroup(group, new GroupToEvent() {
+//            @Override
+//            public void onSuccess(Group group, String key) {
+//                // Form is successfully submitted, navigate to next activity
+//                Intent intent = new Intent(Requirement_collection.this, Dashboard.class);
+//                SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+//                intent.putExtra("qrcode", sharedPreferences.getString("Key", ""));
+//                startActivity(intent);
+//
+//                // Show success message only when form submission is successful
+//                Toast.makeText(Requirement_collection.this, "Form Submitted Successfully!", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFailed() {
+//                Toast.makeText(getBaseContext(), "Failed to submit form!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
         GroupDataManager.InsertUserInGroup(group, new GroupToEvent() {
             @Override
             public void onSuccess(Group group, String key) {
                 Intent intent =new Intent(Requirement_collection.this, Dashboard.class);
                 SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-                intent.putExtra("qrcode", sharedPreferences.getString("Key","") + " " + key);
+                String qrdata=sharedPreferences.getString("Key","") + " " + key;
+//                intent.putExtra("qrcode", qrdata);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("qrdata",qrdata);
+                editor.commit();
                 startActivity(intent);
             }
 
@@ -165,9 +208,9 @@ public class Requirement_collection extends AppCompatActivity {
         // If all validations pass, show a success message
         Toast.makeText(this, "Form Submitted Successfully!", Toast.LENGTH_SHORT).show();
 
-        // Here you can handle the collected data, like sending it to a server, storing in a database, etc.
-        // For now, we just clear the form after submission
-//        clearForm();
+//         Here you can handle the collected data, like sending it to a server, storing in a database, etc.
+//         For now, we just clear the form after submission
+        clearForm();
 
     }
 

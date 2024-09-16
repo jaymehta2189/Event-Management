@@ -63,6 +63,50 @@ public class GroupDataManager {
             }
         });
     }
+//public static void InsertUserInGroup(Group group, GroupToEvent callback){
+//    HashMap<String, Object> dataset = new HashMap<>();
+//    UserDataManager.FindByListOfEmailOnly(group.getStudentEmailId(), new FindListOfEmail() {
+//        @Override
+//        public void onSuccess(List<String> users) {
+//            dataset.put("ProjectName", group.getProjectName());
+//            dataset.put("GroupName", group.getGroupName());
+//            dataset.put("EventName", group.getEventName());
+//            dataset.put("ContactNumber", group.getContactNumber());
+//            dataset.put("StudentsKey", users);
+//
+//            String key = databaseReference.push().getKey();  // Generate a single key
+//            if (key == null) {
+//                callback.onFailed();  // Handle failure if key generation fails
+//                return;
+//            }
+//            dataset.put("Key", key);
+//
+//            databaseReference.child(key).setValue(dataset)  // Set value without another push
+//                    .addOnCompleteListener(task -> {
+//                        if (task.isSuccessful()) {
+//                            UserDataManager.FindByListSet(users, new UpdateOrViewData() {
+//                                @Override
+//                                public void onSuccess(Object data) {
+//                                    User user = (User) data;
+//                                    user.setPresent(false);
+//                                    user.setFood(false);
+//                                    user.setJoinEvent(true);
+//                                    user.setGroupId(key);
+//                                }
+//                            });
+//                            EventDataManager.InsertGroupInEvent(group.getEventName(), group, key, callback);
+//                        } else {
+//                            callback.onFailed();
+//                        }
+//                    });
+//        }
+//
+//        @Override
+//        public void onFailed(List<String> allSuccessuser) {
+//            callback.onFailed();  // Handle case when emails aren't found
+//        }
+//    });
+//}
 
     public static void FindGroup(String Studentkey, UpdateOrViewData callback){
 

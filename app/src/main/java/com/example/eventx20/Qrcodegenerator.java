@@ -1,4 +1,6 @@
 package com.example.eventx20;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -46,8 +48,11 @@ public class Qrcodegenerator extends AppCompatActivity {
 //                generateQRCode(inputText);
 //            }
 //        });
-        String qrcode= getIntent().getStringExtra("qrcode");
-        generateQRCode(qrcode);
+//        String qrcode= getIntent().getStringExtra("qrcode");
+        SharedPreferences sharedPreferences=getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        String qrdata=sharedPreferences.getString("qrdata","");
+        generateQRCode(qrdata);
+
     }
 
     private void generateQRCode(String text) {
