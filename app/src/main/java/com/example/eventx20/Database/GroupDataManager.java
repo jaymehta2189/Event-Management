@@ -24,23 +24,25 @@ public class GroupDataManager {
     public static void InsertUserInGroup(Group group, GroupToEvent callback){
 
         HashMap<String, Object> dataset = new HashMap<>();
-        UserDataManager.FindByListOfEmailOnly(group.getStudentEmailId(), new FindListOfEmail() {
+        UserDataManager.FindByListOfEmailOnly(group.getStudentId(), new FindListOfEmail() {
             @Override
             public void onSuccess(List<String> users) {
-                dataset.put("ProjectName",group.getProjectName());
-                dataset.put("GroupName",group.getGroupName());
-                dataset.put("EventName",group.getEventName());
-                dataset.put("ContactNumber",group.getContactNumber());
-                dataset.put("StudentsKey",users);
+                dataset.put("ProjectName", group.getProjectName());
+                dataset.put("GroupName", group.getGroupName());
+                dataset.put("EventName", group.getEventName());
+                dataset.put("ContactNumber", group.getContactNumber());
+                dataset.put("StudentId", users);
 
+                // Generate a new unique key
                 String key = databaseReference.push().getKey();
-                dataset.put("Key", key);
+                group.setKey(key);
+                dataset.put("Key", group.getKey());
 
                 assert key != null;
-                databaseReference.child(key).push().setValue(dataset)
+                databaseReference.child(key).setValue(dataset)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                UserDataManager.FindByListSet(users,new UpdateOrViewData(){
+                                UserDataManager.FindByListSet(users, new UpdateOrViewData() {
                                     @Override
                                     public void onSuccess(Object data) {
                                         User user = (User) data;
@@ -48,9 +50,17 @@ public class GroupDataManager {
                                         user.setFood(false);
                                         user.setJoinEvent(true);
                                         user.setGroupId(key);
+
+//                                        databaseReference.child(user.getKey()).setValue(user)
+//                                                .addOnCompleteListener(updateTask -> {
+//                                                    if (updateTask.isSuccessful()) {
+//                                                        // GOOD WORK :)
+//                                                        // Optionally handle success
+//                                                    }
+//                                                });
                                     }
                                 });
-                                EventDataManager.InsertGroupInEvent(group.getEventName(), group, key, callback);
+                                EventDataManager.InsertGroupInEvent(group.getEventName(), group, group.getKey(), callback);
                             } else {
                                 callback.onFailed();
                             }
@@ -59,56 +69,12 @@ public class GroupDataManager {
 
             @Override
             public void onFailed(List<String> allSuccessuser) {
-
+                // Handle failure
             }
         });
     }
-//public static void InsertUserInGroup(Group group, GroupToEvent callback){
-//    HashMap<String, Object> dataset = new HashMap<>();
-//    UserDataManager.FindByListOfEmailOnly(group.getStudentEmailId(), new FindListOfEmail() {
-//        @Override
-//        public void onSuccess(List<String> users) {
-//            dataset.put("ProjectName", group.getProjectName());
-//            dataset.put("GroupName", group.getGroupName());
-//            dataset.put("EventName", group.getEventName());
-//            dataset.put("ContactNumber", group.getContactNumber());
-//            dataset.put("StudentsKey", users);
-//
-//            String key = databaseReference.push().getKey();  // Generate a single key
-//            if (key == null) {
-//                callback.onFailed();  // Handle failure if key generation fails
-//                return;
-//            }
-//            dataset.put("Key", key);
-//
-//            databaseReference.child(key).setValue(dataset)  // Set value without another push
-//                    .addOnCompleteListener(task -> {
-//                        if (task.isSuccessful()) {
-//                            UserDataManager.FindByListSet(users, new UpdateOrViewData() {
-//                                @Override
-//                                public void onSuccess(Object data) {
-//                                    User user = (User) data;
-//                                    user.setPresent(false);
-//                                    user.setFood(false);
-//                                    user.setJoinEvent(true);
-//                                    user.setGroupId(key);
-//                                }
-//                            });
-//                            EventDataManager.InsertGroupInEvent(group.getEventName(), group, key, callback);
-//                        } else {
-//                            callback.onFailed();
-//                        }
-//                    });
-//        }
-//
-//        @Override
-//        public void onFailed(List<String> allSuccessuser) {
-//            callback.onFailed();  // Handle case when emails aren't found
-//        }
-//    });
-//}
 
-    public static void FindGroup(String Studentkey, UpdateOrViewData callback){
+    public static void FindGroup(String Studentkey, FindByModel callback){
 
         UserDataManager.FindByKey(Studentkey, new FindByModel() {
             @Override
@@ -120,8 +86,7 @@ public class GroupDataManager {
                         if (snapshot.exists()){
                             Group group = snapshot.getValue(Group.class);
                             if(group != null){
-                                callback.onSuccess(group);
-//                                UserDataManager.FindByListSet(group.getStudentEmailId(), callback);
+                                UserDataManager.FindByGroup(group,callback);
                             }
                         }
                     }

@@ -3,6 +3,7 @@ package com.example.eventx20.Database.DataModel;
 import androidx.annotation.NonNull;
 
 public class User {
+    private String Key;
     private String Name;
     private String Email;
     private String Password;
@@ -22,6 +23,32 @@ public class User {
         this.isFood = false;
         this.isPresent = false;
         this.isJoinEvent = false;
+        this.GroupId = "";
+        this.Key = "";
+    }
+
+    public boolean isJoinEvent() {
+        return isJoinEvent;
+    }
+
+    public void setJoinEvent(boolean joinEvent) {
+        isJoinEvent = joinEvent;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
     }
 
     public String getEmail() {
@@ -40,28 +67,12 @@ public class User {
         Password = password;
     }
 
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
     public boolean isPresent() {
         return isPresent;
     }
 
     public void setPresent(boolean present) {
         isPresent = present;
-    }
-
-    public boolean isJoinEvent() {
-        return isJoinEvent;
-    }
-
-    public void setJoinEvent(boolean joinEvent) {
-        isJoinEvent = joinEvent;
     }
 
     public boolean isFood() {
@@ -79,6 +90,7 @@ public class User {
     public void setGroupId(String groupId) {
         GroupId = groupId;
     }
+
 
     @NonNull
     @Override

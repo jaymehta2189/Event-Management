@@ -9,12 +9,7 @@ import java.util.List;
 
 public class Event {
 
-    private  String Name;
-    private  String Key;
-    private  String date;
-    private  String time;
-    private  String Location;
-    private  List<String> GroupId;
+
     public Event(){
 
     }
@@ -28,37 +23,12 @@ public class Event {
         this.GroupId = groupId;
     }
 
-
-    public String getDate() {
-        return date;
+    public List<String> getGroupId() {
+        return GroupId;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getId() {
-        return Key;
-    }
-
-    public void setId(String key) {
-        this.Key = key;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setGroupId(List<String> groupId) {
+        GroupId = groupId;
     }
 
     public String getLocation() {
@@ -69,13 +39,45 @@ public class Event {
         Location = location;
     }
 
-    public List<String> getGroupId() {
-        return GroupId;
+    public String getTime() {
+        return time;
     }
 
-    public void setGroupId(List<String> groupId) {
-        GroupId = groupId;
+    public void setTime(String time) {
+        this.time = time;
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    private  String Name;
+    private  String Key;
+    private  String date;
+    private  String time;
+    private  String Location;
+    private  List<String> GroupId;
+
 
     @NonNull
     @Override

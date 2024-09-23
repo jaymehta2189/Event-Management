@@ -10,6 +10,7 @@ import com.example.eventx20.Database.Callback.InsertModel;
 import com.example.eventx20.Database.Callback.QrStudent;
 import com.example.eventx20.Database.Callback.ReadDataCallback;
 import com.example.eventx20.Database.Callback.UpdateOrViewData;
+import com.example.eventx20.Database.DataModel.Group;
 import com.example.eventx20.Database.DataModel.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserDataManager {
     private static final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -35,9 +37,14 @@ public class UserDataManager {
         dataset.put("Name", user.getName());
         dataset.put("Email", user.getEmail());
         dataset.put("Password", user.getPassword());
+        dataset.put("isJoinEvent",user.isJoinEvent());
+        dataset.put("isPresent",user.isPresent());
+        dataset.put("isFood",user.isFood());
+        dataset.put("GroupId",user.getGroupId());
 
         String key = databaseReference.push().getKey();
-        dataset.put("Key", key);
+        user.setKey(key);
+        dataset.put("Key", user.getKey());
 
         if (key != null) {
             databaseReference.child(key).setValue(dataset).addOnCompleteListener(task -> {
@@ -113,10 +120,7 @@ public class UserDataManager {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                            User user = userSnapshot.getValue(User.class);
-                            if (user != null) {
-                                matchedUsers.add(dataSnapshot.getKey()); // Add the found user to the list
-                            }
+                            matchedUsers.add(userSnapshot.getKey());
                         }
                     }
                     if (matchedUsers.size() == studentEmails.size()) {
@@ -205,10 +209,53 @@ public class UserDataManager {
 
             @Override
             public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
-                // Handle transaction completion
             }
         });
 
+    }
+
+    public static void FindByGroup(Group group, FindByModel callback) {
+        List<User> students = new ArrayList<>();
+        List<String> studentIds = group.getStudentId();
+
+        if (studentIds == null || studentIds.isEmpty()) {
+            callback.onFailure();
+            return;
+        }
+
+        final int totalStudents = studentIds.size();
+        final AtomicInteger processedCount = new AtomicInteger(0);
+
+        // For each student ID, retrieve the corresponding user data
+        for (String key : studentIds) {
+            FindByKey(key, new FindByModel() {
+                @Override
+                public void onSuccess(Object model) {
+                    if (model != null) {
+                        students.add((User) model);
+                    }
+
+                    // Increment the processed count and check if all are processed
+                    if (processedCount.incrementAndGet() == totalStudents) {
+                        Object[] listOfGroup = new Object[2];
+                        listOfGroup[0] = students;
+                        listOfGroup[1] = group;
+                        callback.onSuccess(listOfGroup);
+                    }
+                }
+
+                @Override
+                public void onFailure() {
+                    // Handle failure (e.g., if a user is not found or the request fails)
+                    if (processedCount.incrementAndGet() == totalStudents) {
+                        Object[] listOfGroup = new Object[2];
+                        listOfGroup[0] = students;
+                        listOfGroup[1] = group;
+                        callback.onSuccess(listOfGroup);  // Still return collected users, even if some fail
+                    }
+                }
+            });
+        }
     }
 
     public static void FindByKey(String Key , FindByModel callback){

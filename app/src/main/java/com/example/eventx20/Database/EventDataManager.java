@@ -1,5 +1,7 @@
 package com.example.eventx20.Database;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.eventx20.Database.Callback.FindByModel;
@@ -28,25 +30,51 @@ public class EventDataManager {
     private static final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private static final DatabaseReference databaseReference = firebaseDatabase.getReference("Event");
 
-    public static void InsertGroupInEvent(@NotNull String EventName, Group group, String key, GroupToEvent callback){
-        Query query = databaseReference.orderByChild("Name").equalTo(EventName);
+    public static void InsertGroupInEvent(@NotNull String EventName, Group group, String key, GroupToEvent callback) {
+        Query query = databaseReference.orderByChild("name").equalTo(EventName);
+        Log.d("Tag",EventName);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Event event = snapshot.getValue(Event.class);
-                if (event != null) {
-                    if (event.getGroupId() == null) {
-                        event.setGroupId(new ArrayList<>());
+                if (snapshot.exists()) {
+                    // Event found, update its groupId
+                    Log.d("Tag",EventName+"3");
+                    for (DataSnapshot eventSnapshot : snapshot.getChildren()) {
+                        Event event = eventSnapshot.getValue(Event.class);
+                        Log.d("Tag",EventName+"4");
+                        if (event != null) {
+                            // Check if groupId is null, initialize it if needed
+                            if (event.getGroupId() == null) {
+                                event.setGroupId(new ArrayList<>());
+                            }
+                            if (!event.getGroupId().contains(key)) {
+                                event.getGroupId().add(key);
+                            }
+
+                            // Update the event in the database
+                            Log.d("Tag",EventName+"1");
+                            databaseReference.child(Objects.requireNonNull(eventSnapshot.getKey())).setValue(event)
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            callback.onSuccess(group, eventSnapshot.getKey());
+                                        } else {
+                                            Log.d("Tag",EventName+"2");
+                                            callback.onFailed();
+                                        }
+                                    });
+
+                            return;
+                        }
                     }
-                    event.getGroupId().add(key);
-                    databaseReference.child(Objects.requireNonNull(snapshot.getKey())).setValue(event);
-                    callback.onSuccess(group, snapshot.getKey());
+                } else {
+                    // Event does not exist, handle the case (optional)
+                    callback.onFailed();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                callback.onFailed();
             }
         });
     }
@@ -59,7 +87,7 @@ public class EventDataManager {
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 for (DataSnapshot snapshot : datasnapshot.getChildren()) {
                     Event userData = snapshot.getValue(Event.class);
-                    allUser.add(userData);
+                    if(userData != null) allUser.add(userData);
                 }
                 callback.onDataLoaded(Collections.singletonList(allUser));
             }

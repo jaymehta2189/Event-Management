@@ -5,20 +5,19 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 public class Group {
+    private  String Key;
     private String ProjectName;
     private String GroupName;
     private String EventName;
     private String ContactNumber;
     private List<String> StudentId;
 
-    public Group(){}
+    public String getKey() {
+        return Key;
+    }
 
-    public Group(String projectName, String groupName, String eventName, String contactNumber, List<String> studentEmailId) {
-        ProjectName = projectName;
-        GroupName = groupName;
-        EventName = eventName;
-        ContactNumber = contactNumber;
-        StudentId = studentEmailId;
+    public void setKey(String key) {
+        Key = key;
     }
 
     public String getProjectName() {
@@ -45,20 +44,30 @@ public class Group {
         EventName = eventName;
     }
 
-    public List<String> getStudentEmailId() {
-        return StudentId;
-    }
-
-    public void setStudentEmailId(List<String> studentEmailId) {
-        StudentId = studentEmailId;
-    }
-
     public String getContactNumber() {
         return ContactNumber;
     }
 
     public void setContactNumber(String contactNumber) {
         ContactNumber = contactNumber;
+    }
+
+    public List<String> getStudentId() {
+        return StudentId;
+    }
+
+    public void setStudentId(List<String> studentId) {
+        StudentId = studentId;
+    }
+
+    public Group(){}
+
+    public Group(String projectName, String groupName, String eventName, String contactNumber, List<String> studentEmailId) {
+        ProjectName = projectName;
+        GroupName = groupName;
+        EventName = eventName;
+        ContactNumber = contactNumber;
+        StudentId = studentEmailId;
     }
 
     @NonNull

@@ -189,6 +189,10 @@ public class Requirement_collection extends AppCompatActivity {
         GroupDataManager.InsertUserInGroup(group, new GroupToEvent() {
             @Override
             public void onSuccess(Group group, String key) {
+
+
+                Toast.makeText(getBaseContext(), "Form Submitted Successfully!", Toast.LENGTH_SHORT).show();
+
                 Intent intent =new Intent(Requirement_collection.this, Dashboard.class);
                 SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
                 String qrdata=sharedPreferences.getString("Key","") + " " + key;
@@ -206,7 +210,7 @@ public class Requirement_collection extends AppCompatActivity {
         });
 
         // If all validations pass, show a success message
-        Toast.makeText(this, "Form Submitted Successfully!", Toast.LENGTH_SHORT).show();
+
 
 //         Here you can handle the collected data, like sending it to a server, storing in a database, etc.
 //         For now, we just clear the form after submission
