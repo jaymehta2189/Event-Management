@@ -34,17 +34,17 @@ public class UserDataManager {
     public static void InsertData(@NonNull User user, @NonNull InsertModel callback) {
         HashMap<String, Object> dataset = new HashMap<>();
 
-        dataset.put("Name", user.getName());
-        dataset.put("Email", user.getEmail());
-        dataset.put("Password", user.getPassword());
+        dataset.put("name", user.getName());
+        dataset.put("email", user.getEmail());
+        dataset.put("password", user.getPassword());
         dataset.put("isJoinEvent",user.isJoinEvent());
         dataset.put("isPresent",user.isPresent());
         dataset.put("isFood",user.isFood());
-        dataset.put("GroupId",user.getGroupId());
+        dataset.put("groupId",user.getGroupId());
 
         String key = databaseReference.push().getKey();
         user.setKey(key);
-        dataset.put("Key", user.getKey());
+        dataset.put("key", user.getKey());
 
         if (key != null) {
             databaseReference.child(key).setValue(dataset).addOnCompleteListener(task -> {
@@ -81,7 +81,7 @@ public class UserDataManager {
     }
 
     public static void FindByEmail(@NonNull String email, @NonNull String password, @NonNull FindByModel callback) {
-        Query query = databaseReference.orderByChild("Email").equalTo(email);
+        Query query = databaseReference.orderByChild("email").equalTo(email);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -113,7 +113,7 @@ public class UserDataManager {
         List<String> matchedUsers = new ArrayList<>();
 
         for (String email : studentEmails) {
-            Query query = databaseReference.orderByChild("Email").equalTo(email);
+            Query query = databaseReference.orderByChild("email").equalTo(email);
 
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -137,7 +137,7 @@ public class UserDataManager {
     }
 
     public static void FindByName(@NonNull String name, @NonNull String password, @NonNull FindByModel callback) {
-        Query query = databaseReference.orderByChild("Name").equalTo(name);
+        Query query = databaseReference.orderByChild("name").equalTo(name);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

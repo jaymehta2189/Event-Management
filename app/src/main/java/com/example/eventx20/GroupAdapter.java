@@ -6,18 +6,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.eventx20.Database.DataModel.Group;
 import com.example.eventx20.Database.DataModel.User;
-
 import java.util.List;
 
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHolder> {
 
-    private List<group_list.GroupData> groupDataList;
+    private List<User> studentsList;
+    private Group group;
 
-    public GroupAdapter(List<group_list.GroupData> groupDataList) {
-        this.groupDataList = groupDataList;
+    public GroupAdapter(List<User> studentsList) {
+        this.studentsList = studentsList;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     @NonNull
@@ -29,38 +32,34 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
 
     @Override
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
-        group_list.GroupData groupData = groupDataList.get(position);
-        Group group = groupData.getGroup();
-        List<User> students = groupData.getStudents();
+        User student = studentsList.get(position);
 
-        // Bind the group data
-        holder.textViewGroupName.setText(group.getGroupName());  // Assuming Group has a method getGroupName()
-        holder.textViewGroupDetails.setText("Group Name: " + group.getGroupName()); // Assuming Group has a method getGroupId()
-
-        // Display the student names (or any other details)
-        StringBuilder studentDetails = new StringBuilder();
-        for (User student : students) {
-            studentDetails.append(student.getName()).append("\n"); // Assuming User has a method getName()
+        // Display the group information once
+        if (position == 0 && group != null) {
+            holder.textViewGroupName.setText(group.getGroupName());
+            holder.textViewGroupDetails.setText("Group ID: " + group.getGroupName());
         }
-        holder.textViewStudentNames.setText(studentDetails.toString());
+
+        // Display student information
+        holder.textViewStudentName.setText(student.getName());
     }
 
     @Override
     public int getItemCount() {
-        return groupDataList.size();
+        return studentsList.size();
     }
 
     public static class GroupViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewGroupName;
         TextView textViewGroupDetails;
-        TextView textViewStudentNames;
+        TextView textViewStudentName;
 
         public GroupViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewGroupName = itemView.findViewById(R.id.textViewGroupName);
             textViewGroupDetails = itemView.findViewById(R.id.textViewGroupDetails);
-            textViewStudentNames = itemView.findViewById(R.id.textViewStudentNames);
+            textViewStudentName = itemView.findViewById(R.id.textViewStudentNames);
         }
     }
 }

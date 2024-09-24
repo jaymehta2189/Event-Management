@@ -9,6 +9,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.eventx20.Database.Callback.QrStudent;
+import com.example.eventx20.Database.DataModel.User;
+import com.example.eventx20.QrScannRes.QrScan;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -56,8 +59,28 @@ public class ScanQr extends AppCompatActivity implements View.OnClickListener {
             } else {
                 // if the intentResult is not null we'll set
                 // the content and format of scan message
-                messageText.setText(intentResult.getContents());
-                messageFormat.setText(intentResult.getFormatName());
+                String str = intentResult.getContents();
+                messageText.setText(str);
+
+                new QrScan(str).ProcessQrData(new QrStudent() {
+                    @Override
+                    public void onSuccess(User user) {
+                        messageFormat.setText("Successfully Entered");
+                    }
+                    @Override
+                    public void onAllReadyPresent(User user) {
+                        messageFormat.setText("Already visited");
+                    }
+
+                    @Override
+                    public void onFailed() {
+
+                    }
+                });
+
+
+
+
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

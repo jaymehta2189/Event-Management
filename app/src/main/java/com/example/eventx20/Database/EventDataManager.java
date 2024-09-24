@@ -119,12 +119,15 @@ public class EventDataManager {
     }
 
     public  static void FindByName(String name, FindByModel callback){
-        Query query = databaseReference.orderByChild("Name").equalTo(name);
+        Query query = databaseReference.orderByChild("name").equalTo(name);
+        Log.d("TAG", "FindByName: "+"first");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 boolean successful = false;
+                Log.d("TAG", "FindByName: "+"first2");
                 if (dataSnapshot.exists()) {
+                    Log.d("TAG", "FindByName: "+"first1");
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Event userData = snapshot.getValue(Event.class);
                         if (userData != null && name.equals(userData.getName())) {

@@ -27,16 +27,16 @@ public class GroupDataManager {
         UserDataManager.FindByListOfEmailOnly(group.getStudentId(), new FindListOfEmail() {
             @Override
             public void onSuccess(List<String> users) {
-                dataset.put("ProjectName", group.getProjectName());
-                dataset.put("GroupName", group.getGroupName());
-                dataset.put("EventName", group.getEventName());
-                dataset.put("ContactNumber", group.getContactNumber());
-                dataset.put("StudentId", users);
+                dataset.put("projectName", group.getProjectName());
+                dataset.put("groupName", group.getGroupName());
+                dataset.put("eventName", group.getEventName());
+                dataset.put("contactNumber", group.getContactNumber());
+                dataset.put("studentId", users);
 
                 // Generate a new unique key
                 String key = databaseReference.push().getKey();
                 group.setKey(key);
-                dataset.put("Key", group.getKey());
+                dataset.put("key", group.getKey());
 
                 assert key != null;
                 databaseReference.child(key).setValue(dataset)
