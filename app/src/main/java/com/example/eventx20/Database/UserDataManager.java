@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.example.eventx20.Database.Callback.FindByModel;
 import com.example.eventx20.Database.Callback.FindListOfEmail;
 import com.example.eventx20.Database.Callback.InsertModel;
+import com.example.eventx20.Database.Callback.QrChangeData;
 import com.example.eventx20.Database.Callback.QrStudent;
 import com.example.eventx20.Database.Callback.ReadDataCallback;
 import com.example.eventx20.Database.Callback.UpdateOrViewData;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserDataManager {
@@ -165,7 +167,7 @@ public class UserDataManager {
         });
     }
 
-    public  static  void QrFindByKey(@NonNull String Key, QrStudent callback){
+    public  static  void QrFindByKey(@NonNull String Key, QrChangeData ChangeCallback, QrStudent callback){
         databaseReference.child(Key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -176,7 +178,8 @@ public class UserDataManager {
                             callback.onAllReadyPresent(user);
                             return;
                         }
-                        user.setPresent(true);
+//                        user.setPresent(true);
+                        ChangeCallback.onChange(user);
                         databaseReference.child(Key).setValue(user);
                         callback.onSuccess(user);
                     }
@@ -272,6 +275,35 @@ public class UserDataManager {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 callback.onFailure();  // Return null in case of an error
+            }
+        });
+    }
+    public static  void BindUserToEvent(String key,FindByModel callback){
+        UserDataManager.FindByKey(key, new FindByModel() {
+            @Override
+            public void onSuccess(Object model) {
+                User user = (User) model;
+                if(!Objects.equals(user.getGroupId(), "")) {
+                    GroupDataManager.FindByKey(user.getGroupId(), new FindByModel() {
+                        @Override
+                        public void onSuccess(Object model) {
+                            Group group = (Group) model;
+                            EventDataManager.FindByName(group.getEventName(), callback);
+                        }
+
+                        @Override
+                        public void onFailure() {
+
+                        }
+                    });
+                }else {
+                    callback.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure() {
+
             }
         });
     }

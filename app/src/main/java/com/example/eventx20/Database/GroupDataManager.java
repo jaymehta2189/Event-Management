@@ -102,4 +102,21 @@ public class GroupDataManager {
         });
 
     }
+    public static  void FindByKey(String key,FindByModel callback){
+        databaseReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Group group = null;
+                if (snapshot.exists()) {
+                    group = snapshot.getValue(Group.class);
+                }
+                callback.onSuccess(group);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eventx20.Database.Callback.FindByModel;
+import com.example.eventx20.Database.DataModel.Event;
 import com.example.eventx20.Database.UserDataManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -71,10 +72,31 @@ public class MainActivity extends AppCompatActivity {
 //                            editor.putString("qrCode", (String)model);
                             editor.commit();
 
-                            Intent intent = new Intent(MainActivity.this, currentevents.class);
+                            UserDataManager.BindUserToEvent((String) model, new FindByModel() {
+                                @Override
+                                public void onSuccess(Object model) {
+                                    Event event = (Event)model;
+                                    String qrdata=sharedPreferences.getString("Key","") + " " +event.getKey();
+                                    editor.putString("qrdata",qrdata);
+                                    String fooddata=sharedPreferences.getString("Key","") + " " +event.getKey()+" F";
+                                    editor.putString("fooddata",fooddata);
+                                    editor.commit();
+                                    Intent intent1=new Intent(MainActivity.this,Dashboard.class);
+                                    startActivity(intent1);
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFailure() {
+                                    Intent intent = new Intent(MainActivity.this, currentevents.class);
 //                            intent.putExtra("qrcode", (String)model);
-                            startActivity(intent);
-                            finish();
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+
+
+
                         }
 
                         @Override

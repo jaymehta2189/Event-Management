@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.eventx20.Database.Callback.QrChangeData;
 import com.example.eventx20.Database.Callback.QrStudent;
 import com.example.eventx20.Database.DataModel.User;
 import com.example.eventx20.QrScannRes.QrScan;
@@ -62,11 +63,18 @@ public class ScanQr extends AppCompatActivity implements View.OnClickListener {
                 String str = intentResult.getContents();
                 messageText.setText(str);
 
-                new QrScan(str).ProcessQrData(new QrStudent() {
+                new QrScan(str).ProcessQrData(new QrChangeData() {
+                    @Override
+                    public void onChange(Object model) {
+                        User user = (User) model;
+                        user.setPresent(true);
+                    }
+                }, new QrStudent() {
                     @Override
                     public void onSuccess(User user) {
                         messageFormat.setText("Successfully Entered");
                     }
+
                     @Override
                     public void onAllReadyPresent(User user) {
                         messageFormat.setText("Already visited");
