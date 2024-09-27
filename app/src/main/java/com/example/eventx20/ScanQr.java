@@ -62,32 +62,55 @@ public class ScanQr extends AppCompatActivity implements View.OnClickListener {
                 // the content and format of scan message
                 String str = intentResult.getContents();
                 messageText.setText(str);
+                if(str.endsWith("F")){
+                    new QrScan(str).ProcessQrData(new QrChangeData() {
+                        @Override
+                        public void onChange(Object model) {
+                            User user = (User) model;
+                            user.setFood(true);
+                        }
+                    }, new QrStudent() {
+                        @Override
+                        public void onSuccess(User user) {
+                            messageFormat.setText("Enjoy your meal");
+                        }
 
-                new QrScan(str).ProcessQrData(new QrChangeData() {
-                    @Override
-                    public void onChange(Object model) {
-                        User user = (User) model;
-                        user.setPresent(true);
-                    }
-                }, new QrStudent() {
-                    @Override
-                    public void onSuccess(User user) {
-                        messageFormat.setText("Successfully Entered");
-                    }
+                        @Override
+                        public void onAllReadyPresent(User user) {
+                            messageFormat.setText("You have already availed your meal");
+                        }
 
-                    @Override
-                    public void onAllReadyPresent(User user) {
-                        messageFormat.setText("Already visited");
-                    }
+                        @Override
+                        public void onFailed() {
 
-                    @Override
-                    public void onFailed() {
+                        }
+                    });
 
-                    }
-                });
+                }else{
+                    new QrScan(str).ProcessQrData(new QrChangeData() {
+                        @Override
+                        public void onChange(Object model) {
+                            User user = (User) model;
+                            user.setPresent(true);
+                        }
+                    }, new QrStudent() {
+                        @Override
+                        public void onSuccess(User user) {
+                            messageFormat.setText("Successfully Entered");
+                        }
 
+                        @Override
+                        public void onAllReadyPresent(User user) {
+                            messageFormat.setText("Already visited");
+                        }
 
+                        @Override
+                        public void onFailed() {
 
+                        }
+                    });
+
+                }
 
             }
         } else {

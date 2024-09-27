@@ -5,14 +5,19 @@
     android:layout_height="match_parent">
 
     <!-- QR Code ImageView -->
-    <ImageView
-        android:id="@+id/qrCodeImageView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:contentDescription="QR Code" />
+<!--    <ImageView-->
+<!--        android:id="@+id/qrCodeImageView"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="300dp"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:contentDescription="QR Code" />-->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
     <!-- EditText for input -->
 <!--    <EditText-->

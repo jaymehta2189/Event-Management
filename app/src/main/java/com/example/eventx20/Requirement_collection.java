@@ -199,6 +199,8 @@ public class Requirement_collection extends AppCompatActivity {
 //                intent.putExtra("qrcode", qrdata);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("qrdata",qrdata);
+                String fooddata=sharedPreferences.getString("Key","") + " " +key+" F";
+                editor.putString("fooddata",fooddata);
                 editor.commit();
                 startActivity(intent);
             }
