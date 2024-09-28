@@ -2,106 +2,231 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewteam"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/parent"
-    tools:context=".group_list">
-
-    <!-- Student Name -->
-<!--    <TextView-->
-<!--        android:id="@+id/student_name_label"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Student Name:"-->
-<!--        android:textSize="18sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!-- />-->
+    tools:context=".group_list"
+    >
 
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="450dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/teamtop1" />
 
-<!--    &lt;!&ndash; Student Email &ndash;&gt;-->
-<!--    <TextView-->
-<!--        android:id="@+id/student_email_label"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Student Email:"-->
-<!--        android:textSize="18sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/student_name_label"-->
-<!-- />-->
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
+        android:layout_marginBottom="450dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/teamtop" />
 
-
-<!--    &lt;!&ndash; Group Name &ndash;&gt;-->
-<!--    <TextView-->
-<!--        android:id="@+id/group_name_label"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Group Name:"-->
-<!--        android:textSize="18sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/student_email_label"/>-->
-
-
-
-<!--    &lt;!&ndash; Project Details &ndash;&gt;-->
-<!--    <TextView-->
-<!--        android:id="@+id/project_details_label"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Project Details:"-->
-<!--        android:textSize="18sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/group_name_label"-->
-<!-- />-->
-
-
-
+    <!-- Group Details (e.g., Group ID) -->
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="48dp"
-        android:text="Group Name:"
-        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+
+        android:layout_marginTop="12dp"
+        android:text="Group Name: "
+        android:textSize="20dp"
         android:textStyle="bold"
-        android:textColor="@color/Black"
-        android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+    />
+
+    <!-- Student Names -->
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:text="Project Name:"
-        android:textSize="16sp"
-        android:textStyle="italic"
-        android:textColor="@color/Black"
-        android:padding="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:paddingTop="4dp"
+        android:text="Project Name: "
+        android:textStyle="bold"
+
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-    <LinearLayout
-        android:id="@+id/dynamicFieldsContainer"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textViewStudentNames"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:orientation="vertical"
-        android:paddingTop="16dp"
-        android:background="@drawable/linear_background"
-        android:padding="16dp"
+        android:layout_marginTop="32dp"
+        android:paddingTop="8dp"
+        android:text="Participants Names :"
+        android:textStyle="bold"
+
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
+    <LinearLayout
+        android:id="@+id/dynamicFieldsContainer"
+        android:layout_width="196dp"
+        android:layout_height="101dp"
+        android:layout_marginStart="195dp"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="208dp"
+        android:layout_height="124dp"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/teamimg" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="276dp"
+        android:text="Team details"
+        android:textColor="@color/dark_blue"
+        android:textSize="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:id="@+id/parent"-->
+<!--    tools:context=".group_list">-->
+
+<!--    &lt;!&ndash; Student Name &ndash;&gt;-->
+<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/student_name_label"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text="Student Name:"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textStyle="bold"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash; />&ndash;&gt;-->
+
+
+
+<!--&lt;!&ndash;    &lt;!&ndash; Student Email &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/student_email_label"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text="Student Email:"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textStyle="bold"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintTop_toBottomOf="@id/student_name_label"&ndash;&gt;-->
+<!--&lt;!&ndash; />&ndash;&gt;-->
+
+
+
+<!--&lt;!&ndash;    &lt;!&ndash; Group Name &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/group_name_label"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text="Group Name:"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textStyle="bold"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintTop_toBottomOf="@id/student_email_label"/>&ndash;&gt;-->
+
+
+
+<!--&lt;!&ndash;    &lt;!&ndash; Project Details &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/project_details_label"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text="Project Details:"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textStyle="bold"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintTop_toBottomOf="@id/group_name_label"&ndash;&gt;-->
+<!--&lt;!&ndash; />&ndash;&gt;-->
+
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView8"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="36dp"-->
+<!--        android:layout_marginTop="48dp"-->
+<!--        android:text="Group Name:"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="@color/Black"-->
+<!--        android:padding="8dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView9"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="40dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="Project Name:"-->
+<!--        android:textSize="16sp"-->
+<!--        android:textStyle="italic"-->
+<!--        android:textColor="@color/Black"-->
+<!--        android:padding="8dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView8" />-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/dynamicFieldsContainer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:orientation="vertical"-->
+<!--        android:paddingTop="16dp"-->
+<!--        android:background="@drawable/linear_background"-->
+<!--        android:padding="16dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView9" />-->
+
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

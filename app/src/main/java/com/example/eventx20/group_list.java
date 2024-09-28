@@ -61,9 +61,13 @@ package com.example.eventx20;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.graphics.Typeface;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.eventx20.Database.GroupDataManager;
@@ -167,6 +171,11 @@ public class group_list extends AppCompatActivity {
         for(User st:student){
             TextView t1=new TextView(this);
             t1.setText(st.getName());
+            t1.setTextColor(Color.BLACK);  // You can change the color as needed
+
+            // Set text size
+            t1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            t1.setTypeface(null, Typeface.BOLD);
             dynamic.addView(t1);
         }
 
