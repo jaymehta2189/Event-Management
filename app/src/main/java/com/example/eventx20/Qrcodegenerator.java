@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -78,14 +80,25 @@ import java.util.Map;
 //    }
 //}
 public class Qrcodegenerator extends AppCompatActivity {
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcodegenerator);
 
+        // Initialize TabLayout
+        tabLayout = findViewById(R.id.tabLayout);
+
+        // Initialize ViewPager2 and set its adapter
         ViewPager2 viewPager = findViewById(R.id.viewPager);
         MyPageAdapter pagerAdapter = new MyPageAdapter(this);
         viewPager.setAdapter(pagerAdapter);
+
+        // Attach TabLayout and ViewPager2
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            // You can customize the dots if needed here
+        }).attach();
     }
 }
+

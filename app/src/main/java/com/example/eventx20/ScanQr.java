@@ -69,6 +69,12 @@ public class ScanQr extends AppCompatActivity implements View.OnClickListener {
                             User user = (User) model;
                             user.setFood(true);
                         }
+
+                        @Override
+                        public boolean oncondition(Object model) {
+                            User user = (User)model;
+                            return user.isFood();
+                        }
                     }, new QrStudent() {
                         @Override
                         public void onSuccess(User user) {
@@ -92,6 +98,12 @@ public class ScanQr extends AppCompatActivity implements View.OnClickListener {
                         public void onChange(Object model) {
                             User user = (User) model;
                             user.setPresent(true);
+                        }
+
+                        @Override
+                        public boolean oncondition(Object model) {
+                            User user = (User)model;
+                            return user.isPresent();
                         }
                     }, new QrStudent() {
                         @Override

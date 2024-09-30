@@ -174,7 +174,7 @@ public class UserDataManager {
                 if (dataSnapshot.exists()) {
                     User user = dataSnapshot.getValue(User.class);
                     if (user != null) {
-                        if(user.isPresent()){
+                        if(ChangeCallback.oncondition(user)){
                             callback.onAllReadyPresent(user);
                             return;
                         }

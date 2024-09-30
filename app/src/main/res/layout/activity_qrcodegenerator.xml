@@ -1,44 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- QR Code ImageView -->
-<!--    <ImageView-->
-<!--        android:id="@+id/qrCodeImageView"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="300dp"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_marginTop="50dp"-->
-<!--        android:contentDescription="QR Code" />-->
+    <!-- ViewPager2 for Fragment Swiping -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- TabLayout for Dot Indicator -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+android:layout_marginVertical="650dp"
+        android:layout_centerHorizontal="true"
+        app:tabIndicatorColor="@color/Black"
+        app:tabSelectedTextColor="@color/Black"
+        app:tabPaddingStart="8dp"
+        app:tabPaddingEnd="8dp"
 
-    <!-- EditText for input -->
-<!--    <EditText-->
-<!--        android:id="@+id/inputEditText"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/qrCodeImageView"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginTop="30dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:hint="Enter text to generate QR code"-->
-<!--        android:inputType="text" />-->
-
-<!--    &lt;!&ndash; Button to generate QR Code &ndash;&gt;-->
-<!--    <Button-->
-<!--        android:id="@+id/generateQrButton"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/inputEditText"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginTop="30dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:text="Generate QR Code" />-->
+        app:tabIndicatorHeight="5dp"/>
 </RelativeLayout>
