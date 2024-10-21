@@ -84,7 +84,7 @@ public class Requirement_collection extends AppCompatActivity {
 
             // Create and add a TextView for the student's ID
             EditText studentID = new EditText(this);
-            studentID.setHint("Enter Student ID " + (i + 1));
+            studentID.setHint("Enter Student Email " + (i + 1));
             dynamicFieldsContainer.addView(studentID);
         }
     }
