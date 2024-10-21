@@ -16,6 +16,16 @@
         android:theme="@style/Theme.EventX20"
         tools:targetApi="31">
         <activity
+            android:name=".Event_fetch"
+            android:exported="false" />
+        <activity
+            android:name=".Admin_reg"
+            android:exported="false"
+            android:theme="@style/Theme.EventX20" />
+        <activity
+            android:name=".admin_dash"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity

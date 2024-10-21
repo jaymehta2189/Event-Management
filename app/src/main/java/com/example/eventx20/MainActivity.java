@@ -39,8 +39,17 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
 
         if(sharedPreferences.contains("Key")){
-            Intent intent = new Intent(MainActivity.this, Dashboard.class);
-            startActivity(intent);
+            if(sharedPreferences.getString("Key","").equals("xyz")){
+                Intent intent = new Intent(MainActivity.this, admin_dash.class);
+                startActivity(intent);
+                finish();
+            }
+            else{
+                Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                startActivity(intent);
+                finish();
+            }
+
         }
 //
 //        String registeredEmail = sharedPreferences.getString("Username", "");
@@ -51,7 +60,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = editTextUserLogin.getText().toString();
                 String password = editTextPasswordLogin.getText().toString();
-
+                if(name.equals("admin") &&password.equals("admin")){
+                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                    editor.putString("Key","xyz");
+                    editor.commit();
+                    Intent intent100=new Intent(MainActivity.this,admin_dash.class);
+                    startActivity(intent100);
+                    finish();
+                }else{
                 if (name.isEmpty() || password.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 } else {
@@ -105,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
-            }
+            }}
         });
 
         textViewLogin.setOnClickListener(new View.OnClickListener() {

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.example.eventx20.Database.Callback.FindByModel;
 import com.example.eventx20.Database.Callback.GroupToEvent;
 import com.example.eventx20.Database.Callback.InsertModel;
+import com.example.eventx20.Database.Callback.InsertUpdateModel;
 import com.example.eventx20.Database.Callback.ReadDataCallback;
 import com.example.eventx20.Database.DataModel.Event;
 import com.example.eventx20.Database.DataModel.Group;
@@ -99,24 +100,41 @@ public class EventDataManager {
         });
     }
 
-    public static void InsertEvent(Event event, InsertModel callback){
+
+    public static void InsertEvent(@NotNull Event event, @NotNull InsertUpdateModel callback){
         HashMap<String, Object> dataset = new HashMap<>();
+
+        dataset.put("name",event.getName());
+        dataset.put("date",event.getDate());
+        dataset.put("time",event.getTime());
+        dataset.put("location",event.getLocation());
 
         FindByName(event.getName(), new FindByModel() {
 
             @Override
             public void onSuccess(Object model) {
-
+//                Toast.makeText()
             }
 
             @Override
             public void onFailure() {
-
+                String key = EventDataManager.databaseReference.push().getKey();
+                dataset.put("key",key);
+                assert key != null;
+                EventDataManager.databaseReference.child(key).setValue(dataset).
+                        addOnCompleteListener(task->{
+                            if (task.isSuccessful()) {
+                                callback.onComplete(key);
+                            }else{
+                                callback.onError(key);
+                            }
+                        });
             }
         });
 
 
     }
+
 
     public  static void FindByName(String name, FindByModel callback){
         Query query = databaseReference.orderByChild("name").equalTo(name);
@@ -140,6 +158,23 @@ public class EventDataManager {
                 if (!successful) {
                     callback.onFailure();  // Notify the caller that no matching user was found
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public static void FindByKey(@NonNull String key ,@NonNull FindByModel callback){
+        EventDataManager.databaseReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Event event = null;
+                if (snapshot.exists()) {
+                    event = snapshot.getValue(Event.class);
+                }
+                callback.onSuccess(event);
             }
 
             @Override

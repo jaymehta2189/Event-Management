@@ -18,7 +18,7 @@ public class Dashboard extends AppCompatActivity {
     CardView cardTeam;
     CardView cardList;
     CardView cardQr;
-    Button scanbtn;
+//    Button scanbtn;
     CardView cardLogout;
 
     @Override
@@ -29,7 +29,7 @@ public class Dashboard extends AppCompatActivity {
         cardTeam = findViewById(R.id.cardTeam);
         cardList = findViewById(R.id.cardList);
         cardQr = findViewById(R.id.cardQr);
-        scanbtn=findViewById(R.id.scanBtn);
+//        scanbtn=findViewById(R.id.scanBtn);
         cardLogout = findViewById(R.id.cardLogout);
 
         cardTeam.setOnClickListener(new View.OnClickListener() {
@@ -74,13 +74,13 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        scanbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent =  new Intent(Dashboard.this,ScanQr.class);
-                startActivity(intent);
-            }
-        });
+//        scanbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent =  new Intent(Dashboard.this,ScanQr.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
     }

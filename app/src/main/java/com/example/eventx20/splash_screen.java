@@ -47,10 +47,18 @@ public class splash_screen extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 // When the animation ends, start the next activity or remove the ImageView
                 SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-                if (sharedPreferences.contains("Key")) {
-                    Intent intent = new Intent(splash_screen.this, Dashboard.class);
-                    startActivity(intent);
-                    finish();
+                if(sharedPreferences.contains("Key")){
+                    if(sharedPreferences.getString("Key","").equals("xyz")){
+                        Intent intent = new Intent(splash_screen.this, admin_dash.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        Intent intent = new Intent(splash_screen.this, Dashboard.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
                 } else {
                     Intent intent = new Intent(splash_screen.this, MainActivity.class);
                     startActivity(intent);
